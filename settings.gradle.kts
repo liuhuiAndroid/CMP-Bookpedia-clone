@@ -1,4 +1,4 @@
-rootProject.name = "CMP-Bookpedia"
+rootProject.name = "CMP-Bookpedia-clone"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

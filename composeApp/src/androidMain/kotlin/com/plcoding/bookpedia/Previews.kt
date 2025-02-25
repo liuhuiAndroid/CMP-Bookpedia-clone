@@ -24,8 +24,7 @@ private fun BookSearchBarPreview() {
             searchQuery = "",
             onSearchQueryChange = {},
             onImeSearch = {},
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -49,10 +48,7 @@ private val books = (1..100).map {
 @Preview
 @Composable
 private fun BookListScreenPreview() {
-    BookListScreen(
-        state = BookListState(
-            searchResults = books
-        ),
-        onAction = {}
-    )
+    BookListScreen(state = BookListState(
+        searchResults = books
+    ), onAction = {})
 }

@@ -17,21 +17,31 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+// expect 是在共享代码中声明的平台特定 API，而 actual 是平台特定的实现。
+// platformModule 配置的是平台特定的依赖
 expect val platformModule: Module
 
-// 使用 Koin 来进行依赖注入
+// sharedModule 主要用于跨平台的共享依赖，即这些依赖会在多个平台中使用。
 val sharedModule = module {
+    // 创建一个 HttpClient 实例，并将其注册为 Koin 容器中的单例依赖。
     single { HttpClientFactory.create(get()) }
+
+    // 将 KtorRemoteBookDataSource 注册为一个单例，并将其绑定到接口 RemoteBookDataSource 上。
+    // 这样，当其他地方需要 RemoteBookDataSource 类型的依赖时，Koin 就会提供 KtorRemoteBookDataSource 实例。
     singleOf(::KtorRemoteBookDataSource).bind<RemoteBookDataSource>()
+
     singleOf(::DefaultBookRepository).bind<BookRepository>()
 
+    // 配置一个数据库实例
     single {
-        get<DatabaseFactory>().create()
-            .setDriver(BundledSQLiteDriver())
+        get<DatabaseFactory>().create().setDriver(BundledSQLiteDriver())   // 设置数据库驱动
             .build()
     }
+
+    // 配置数据库中的 DAO 实例
     single { get<FavoriteBookDatabase>().favoriteBookDao }
 
+    // 将 ViewModel 注册为依赖
     viewModelOf(::BookListViewModel)
     viewModelOf(::BookDetailViewModel)
     viewModelOf(::SelectedBookViewModel)

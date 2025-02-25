@@ -18,6 +18,7 @@ class DefaultBookRepository(
     private val remoteBookDataSource: RemoteBookDataSource,
     private val favoriteBookDao: FavoriteBookDao,
 ) : BookRepository {
+
     override suspend fun searchBooks(query: String): Result<List<Book>, DataError.Remote> {
         return remoteBookDataSource
             .searchBooks(query)

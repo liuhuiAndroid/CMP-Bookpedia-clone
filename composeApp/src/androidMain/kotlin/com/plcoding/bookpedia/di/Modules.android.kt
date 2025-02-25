@@ -9,6 +9,7 @@ import org.koin.dsl.module
 
 actual val platformModule: Module
     get() = module {
+        // 声明了一个单例的 HttpClientEngine 实例
         single<HttpClientEngine> { OkHttp.create() }
         single { DatabaseFactory(androidApplication()) }
     }
