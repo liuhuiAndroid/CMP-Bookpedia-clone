@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.map
 
 class DefaultBookRepository(
     private val remoteBookDataSource: RemoteBookDataSource,
-    private val favoriteBookDao: FavoriteBookDao
-): BookRepository {
+    private val favoriteBookDao: FavoriteBookDao,
+) : BookRepository {
     override suspend fun searchBooks(query: String): Result<List<Book>, DataError.Remote> {
         return remoteBookDataSource
             .searchBooks(query)
@@ -28,8 +28,7 @@ class DefaultBookRepository(
 
     override suspend fun getBookDescription(bookId: String): Result<String?, DataError> {
         val localResult = favoriteBookDao.getFavoriteBook(bookId)
-
-        return if(localResult == null) {
+        return if (localResult == null) {
             remoteBookDataSource
                 .getBookDetails(bookId)
                 .map { it.description }
@@ -58,7 +57,7 @@ class DefaultBookRepository(
         return try {
             favoriteBookDao.upsert(book.toBookEntity())
             Result.Success(Unit)
-        } catch(e: SQLiteException) {
+        } catch (e: SQLiteException) {
             Result.Error(DataError.Local.DISK_FULL)
         }
     }

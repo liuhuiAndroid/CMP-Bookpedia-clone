@@ -13,9 +13,9 @@ import kotlinx.serialization.encoding.encodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.decodeFromJsonElement
 
-object BookWorkDtoSerializer: KSerializer<BookWorkDto> {
+// 处理 BookWorkDto 类型的序列化和反序列化
+object BookWorkDtoSerializer : KSerializer<BookWorkDto> {
 
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor(
         BookWorkDto::class.simpleName!!
@@ -23,25 +23,27 @@ object BookWorkDtoSerializer: KSerializer<BookWorkDto> {
         element<String?>("description")
     }
 
+    // 反序列化
     override fun deserialize(decoder: Decoder): BookWorkDto = decoder.decodeStructure(descriptor) {
         var description: String? = null
 
-        while(true) {
-            when(val index = decodeElementIndex(descriptor)) {
+        while (true) {
+            when (val index = decodeElementIndex(descriptor)) {
                 0 -> {
                     val jsonDecoder = decoder as? JsonDecoder ?: throw SerializationException(
                         "This decoder only works with JSON."
                     )
                     val element = jsonDecoder.decodeJsonElement()
-                    description = if(element is JsonObject) {
-                        decoder.json.decodeFromJsonElement<DescriptionDto>(
+                    description = if (element is JsonObject) {
+                        decoder.json.decodeFromJsonElement(
                             element = element,
                             deserializer = DescriptionDto.serializer()
                         ).value
-                    } else if(element is JsonPrimitive && element.isString) {
+                    } else if (element is JsonPrimitive && element.isString) {
                         element.content
                     } else null
                 }
+
                 CompositeDecoder.DECODE_DONE -> break
                 else -> throw SerializationException("Unexpected index $index")
             }
@@ -50,6 +52,7 @@ object BookWorkDtoSerializer: KSerializer<BookWorkDto> {
         return@decodeStructure BookWorkDto(description)
     }
 
+    // 序列化
     override fun serialize(encoder: Encoder, value: BookWorkDto) = encoder.encodeStructure(
         descriptor
     ) {

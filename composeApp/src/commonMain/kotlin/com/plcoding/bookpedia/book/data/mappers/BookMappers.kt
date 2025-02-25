@@ -8,7 +8,7 @@ fun SearchedBookDto.toBook(): Book {
     return Book(
         id = id.substringAfterLast("/"),
         title = title,
-        imageUrl = if(coverKey != null) {
+        imageUrl = if (coverKey != null) {
             "https://covers.openlibrary.org/b/olid/${coverKey}-L.jpg"
         } else {
             "https://covers.openlibrary.org/b/id/${coverAlternativeKey}-L.jpg"

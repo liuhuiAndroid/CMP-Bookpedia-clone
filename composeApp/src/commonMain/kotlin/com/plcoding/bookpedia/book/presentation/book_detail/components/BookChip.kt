@@ -23,12 +23,13 @@ enum class ChipSize {
 fun BookChip(
     modifier: Modifier = Modifier,
     size: ChipSize = ChipSize.REGULAR,
-    chipContent: @Composable RowScope.() -> Unit
+    chipContent: @Composable RowScope.() -> Unit,
 ) {
     Box(
         modifier = modifier
+            // widthIn 用于设置组件在水平方向上的宽度范围
             .widthIn(
-                min = when(size) {
+                min = when (size) {
                     ChipSize.SMALL -> 50.dp
                     ChipSize.REGULAR -> 80.dp
                 }

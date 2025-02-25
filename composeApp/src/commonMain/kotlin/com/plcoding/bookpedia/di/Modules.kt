@@ -19,6 +19,7 @@ import org.koin.dsl.module
 
 expect val platformModule: Module
 
+// 使用 Koin 来进行依赖注入
 val sharedModule = module {
     single { HttpClientFactory.create(get()) }
     singleOf(::KtorRemoteBookDataSource).bind<RemoteBookDataSource>()

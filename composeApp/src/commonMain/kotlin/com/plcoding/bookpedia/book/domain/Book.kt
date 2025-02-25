@@ -11,5 +11,5 @@ data class Book(
     val averageRating: Double?,
     val ratingCount: Int?,
     val numPages: Int?,
-    val numEditions: Int
+    val numEditions: Int,
 )

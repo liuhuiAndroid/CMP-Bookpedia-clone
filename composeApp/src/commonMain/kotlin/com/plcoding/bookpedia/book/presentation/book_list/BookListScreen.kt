@@ -56,7 +56,7 @@ fun BookListScreenRoot(
     BookListScreen(
         state = state,
         onAction = { action ->
-            when(action) {
+            when (action) {
                 is BookListAction.OnBookClick -> onBookClick(action.book)
                 else -> Unit
             }
@@ -71,7 +71,6 @@ fun BookListScreen(
     onAction: (BookListAction) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-
     val pagerState = rememberPagerState { 2 }
     val searchResultsListState = rememberLazyListState()
     val favoriteBooksListState = rememberLazyListState()
@@ -179,9 +178,9 @@ fun BookListScreen(
                             .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        when(pageIndex) {
+                        when (pageIndex) {
                             0 -> {
-                                if(state.isLoading) {
+                                if (state.isLoading) {
                                     CircularProgressIndicator()
                                 } else {
                                     when {
@@ -193,6 +192,7 @@ fun BookListScreen(
                                                 color = MaterialTheme.colorScheme.error
                                             )
                                         }
+
                                         state.searchResults.isEmpty() -> {
                                             Text(
                                                 text = stringResource(Res.string.no_search_results),
@@ -201,6 +201,7 @@ fun BookListScreen(
                                                 color = MaterialTheme.colorScheme.error
                                             )
                                         }
+
                                         else -> {
                                             BookList(
                                                 books = state.searchResults,
@@ -214,8 +215,9 @@ fun BookListScreen(
                                     }
                                 }
                             }
+
                             1 -> {
-                                if(state.favoriteBooks.isEmpty()) {
+                                if (state.favoriteBooks.isEmpty()) {
                                     Text(
                                         text = stringResource(Res.string.no_favorite_books),
                                         textAlign = TextAlign.Center,

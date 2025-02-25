@@ -11,30 +11,30 @@ import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> safeCall(
-    execute: () -> HttpResponse
+    execute: () -> HttpResponse,
 ): Result<T, DataError.Remote> {
     val response = try {
         execute()
-    } catch(e: SocketTimeoutException) {
+    } catch (e: SocketTimeoutException) {
         return Result.Error(DataError.Remote.REQUEST_TIMEOUT)
-    } catch(e: UnresolvedAddressException) {
+    } catch (e: UnresolvedAddressException) {
         return Result.Error(DataError.Remote.NO_INTERNET)
     } catch (e: Exception) {
+        // 确保协程在执行时仍然处于活动状态。如果协程被取消，抛出 CancellationException。
         coroutineContext.ensureActive()
         return Result.Error(DataError.Remote.UNKNOWN)
     }
-
     return responseToResult(response)
 }
 
 suspend inline fun <reified T> responseToResult(
-    response: HttpResponse
+    response: HttpResponse,
 ): Result<T, DataError.Remote> {
-    return when(response.status.value) {
+    return when (response.status.value) {
         in 200..299 -> {
             try {
                 Result.Success(response.body<T>())
-            } catch(e: NoTransformationFoundException) {
+            } catch (e: NoTransformationFoundException) {
                 Result.Error(DataError.Remote.SERIALIZATION)
             }
         }
