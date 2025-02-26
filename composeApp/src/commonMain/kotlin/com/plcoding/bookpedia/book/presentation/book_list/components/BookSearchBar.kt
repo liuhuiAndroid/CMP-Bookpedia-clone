@@ -22,9 +22,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import cmp_bookpedia.composeapp.generated.resources.Res
-import cmp_bookpedia.composeapp.generated.resources.close_hint
-import cmp_bookpedia.composeapp.generated.resources.search_hint
+import cmp_bookpedia_clone.composeapp.generated.resources.Res
+import cmp_bookpedia_clone.composeapp.generated.resources.close_hint
+import cmp_bookpedia_clone.composeapp.generated.resources.search_hint
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
 import com.plcoding.bookpedia.core.presentation.SandYellow

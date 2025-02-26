@@ -5,7 +5,9 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 sealed interface UiText {
+
     data class DynamicString(val value: String) : UiText
+
     class StringResourceId(
         val id: StringResource,
         val args: Array<Any> = arrayOf(),

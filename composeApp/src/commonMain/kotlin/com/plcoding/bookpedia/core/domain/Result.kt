@@ -6,6 +6,7 @@ sealed interface Result<out D, out E : Error> {
         Result<Nothing, E>
 }
 
+// 转换数据
 inline fun <T, E : Error, R> Result<T, E>.map(map: (T) -> R): Result<R, E> {
     return when (this) {
         is Result.Error -> Result.Error(error)
@@ -13,10 +14,12 @@ inline fun <T, E : Error, R> Result<T, E>.map(map: (T) -> R): Result<R, E> {
     }
 }
 
+// 将 Result 转换为空数据结果
 fun <T, E : Error> Result<T, E>.asEmptyDataResult(): EmptyResult<E> {
     return map { }
 }
 
+// 处理成功操作
 inline fun <T, E : Error> Result<T, E>.onSuccess(action: (T) -> Unit): Result<T, E> {
     return when (this) {
         is Result.Error -> this
@@ -27,14 +30,17 @@ inline fun <T, E : Error> Result<T, E>.onSuccess(action: (T) -> Unit): Result<T,
     }
 }
 
+// 处理失败操作
 inline fun <T, E : Error> Result<T, E>.onError(action: (E) -> Unit): Result<T, E> {
     return when (this) {
         is Result.Error -> {
             action(error)
             this
         }
+
         is Result.Success -> this
     }
 }
 
+// Result 的一个别名，表示没有有效数据的结果
 typealias EmptyResult<E> = Result<Unit, E>

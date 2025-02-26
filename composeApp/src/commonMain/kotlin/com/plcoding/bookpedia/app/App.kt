@@ -94,6 +94,9 @@ fun App() {
     }
 }
 
+// 从导航堆栈中共享 ViewModel
+// 不同页面可以共享同一个 ViewModel，特别是父子页面间
+// 子页面可以访问父页面的 ViewModel，从而共享数据和逻辑。
 @Composable
 private inline fun <reified T : ViewModel> NavBackStackEntry.sharedKoinViewModel(
     navController: NavController,

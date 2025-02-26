@@ -32,11 +32,11 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cmp_bookpedia.composeapp.generated.resources.Res
-import cmp_bookpedia.composeapp.generated.resources.favorites
-import cmp_bookpedia.composeapp.generated.resources.no_favorite_books
-import cmp_bookpedia.composeapp.generated.resources.no_search_results
-import cmp_bookpedia.composeapp.generated.resources.search_results
+import cmp_bookpedia_clone.composeapp.generated.resources.Res
+import cmp_bookpedia_clone.composeapp.generated.resources.favorites
+import cmp_bookpedia_clone.composeapp.generated.resources.no_favorite_books
+import cmp_bookpedia_clone.composeapp.generated.resources.no_search_results
+import cmp_bookpedia_clone.composeapp.generated.resources.search_results
 import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.book.presentation.book_list.components.BookList
 import com.plcoding.bookpedia.book.presentation.book_list.components.BookSearchBar

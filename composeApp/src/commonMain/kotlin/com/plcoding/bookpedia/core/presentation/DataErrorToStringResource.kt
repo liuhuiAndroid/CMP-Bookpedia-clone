@@ -1,12 +1,12 @@
 package com.plcoding.bookpedia.core.presentation
 
-import cmp_bookpedia.composeapp.generated.resources.Res
-import cmp_bookpedia.composeapp.generated.resources.error_disk_full
-import cmp_bookpedia.composeapp.generated.resources.error_no_internet
-import cmp_bookpedia.composeapp.generated.resources.error_request_timeout
-import cmp_bookpedia.composeapp.generated.resources.error_serialization
-import cmp_bookpedia.composeapp.generated.resources.error_too_many_requests
-import cmp_bookpedia.composeapp.generated.resources.error_unknown
+import cmp_bookpedia_clone.composeapp.generated.resources.Res
+import cmp_bookpedia_clone.composeapp.generated.resources.error_disk_full
+import cmp_bookpedia_clone.composeapp.generated.resources.error_no_internet
+import cmp_bookpedia_clone.composeapp.generated.resources.error_request_timeout
+import cmp_bookpedia_clone.composeapp.generated.resources.error_serialization
+import cmp_bookpedia_clone.composeapp.generated.resources.error_too_many_requests
+import cmp_bookpedia_clone.composeapp.generated.resources.error_unknown
 import com.plcoding.bookpedia.core.domain.DataError
 
 fun DataError.toUiText(): UiText {

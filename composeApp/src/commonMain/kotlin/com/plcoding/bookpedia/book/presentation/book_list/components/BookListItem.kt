@@ -36,8 +36,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cmp_bookpedia.composeapp.generated.resources.Res
-import cmp_bookpedia.composeapp.generated.resources.book_error_2
+import cmp_bookpedia_clone.composeapp.generated.resources.Res
+import cmp_bookpedia_clone.composeapp.generated.resources.book_error_2
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.book.domain.Book
@@ -63,7 +63,7 @@ fun BookListItem(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Min), // 高度根据其内容的最小尺寸来确定
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -75,6 +75,7 @@ fun BookListItem(
                 var imageLoadResult by remember {
                     mutableStateOf<Result<Painter>?>(null)
                 }
+                // 更加灵活和精细的 UI 控制，也可以直接使用 AsyncImage
                 val painter = rememberAsyncImagePainter(
                     model = book.imageUrl,
                     onSuccess = {
