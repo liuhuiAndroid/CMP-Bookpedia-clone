@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import java.io.File
 
 actual class DatabaseFactory {
+
     actual fun create(): RoomDatabase.Builder<FavoriteBookDatabase> {
         val os = System.getProperty("os.name").lowercase()
         val userHome = System.getProperty("user.home")
@@ -14,7 +15,7 @@ actual class DatabaseFactory {
             else -> File(userHome, ".local/share/Bookpedia")
         }
 
-        if(!appDataDir.exists()) {
+        if (!appDataDir.exists()) {
             appDataDir.mkdirs()
         }
 

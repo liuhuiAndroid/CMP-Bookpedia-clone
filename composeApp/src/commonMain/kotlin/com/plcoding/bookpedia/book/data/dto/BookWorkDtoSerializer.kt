@@ -15,6 +15,8 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 // 处理 BookWorkDto 类型的序列化和反序列化
+// "description": { "value": "Some text" }
+// "description": "Some text"
 object BookWorkDtoSerializer : KSerializer<BookWorkDto> {
 
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor(
