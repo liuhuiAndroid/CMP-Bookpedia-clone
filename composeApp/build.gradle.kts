@@ -60,6 +60,7 @@ kotlin {
 
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.core.splashscreen)
             implementation(libs.jetbrains.compose.navigation)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.androidx.room.runtime)
@@ -70,6 +71,11 @@ kotlin {
 
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
+            api(libs.datastore.preferences)
+            api(libs.datastore)
+            api(libs.moko.permissions)
+            api(libs.moko.permissions.compose)
+            implementation(libs.kotlinx.datetime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
