@@ -75,6 +75,7 @@ kotlin {
             api(libs.moko.permissions.compose)
             api(libs.moko.permissions.location)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.logging)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

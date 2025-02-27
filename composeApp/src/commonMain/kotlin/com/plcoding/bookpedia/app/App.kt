@@ -21,14 +21,13 @@ import com.plcoding.bookpedia.book.presentation.book_detail.BookDetailScreenRoot
 import com.plcoding.bookpedia.book.presentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.presentation.book_list.BookListScreenRoot
 import com.plcoding.bookpedia.book.presentation.book_list.BookListViewModel
-import dev.icerock.moko.permissions.compose.BindEffect
-import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
 fun App() {
+    KLogger.setTag("Bookpedia")
     MaterialTheme {
         val navController = rememberNavController()
         NavHost(

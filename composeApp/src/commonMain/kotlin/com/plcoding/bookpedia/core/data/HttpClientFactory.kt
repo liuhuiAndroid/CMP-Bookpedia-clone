@@ -1,5 +1,6 @@
 package com.plcoding.bookpedia.core.data
 
+import com.plcoding.bookpedia.app.KLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -29,13 +30,11 @@ object HttpClientFactory {
             }
             // 启用日志功能
             install(Logging) {
-                // 默认 logger 或者你可以自定义 logger
                 logger = object : Logger {
                     override fun log(message: String) {
-                        println("Book log: $message")
+                        KLogger.i(message, tag = "network$$$==>")
                     }
                 }
-                // TODO: release 模式需要修改成 LogLevel.NONE
                 level = LogLevel.ALL
             }
             // 设置所有请求的默认配置
