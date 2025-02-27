@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,17 +33,23 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cmp_bookpedia_clone.composeapp.generated.resources.Res
 import cmp_bookpedia_clone.composeapp.generated.resources.favorites
 import cmp_bookpedia_clone.composeapp.generated.resources.no_favorite_books
 import cmp_bookpedia_clone.composeapp.generated.resources.no_search_results
 import cmp_bookpedia_clone.composeapp.generated.resources.search_results
+import com.plcoding.bookpedia.app.PermissionsViewModel
 import com.plcoding.bookpedia.book.domain.Book
 import com.plcoding.bookpedia.book.presentation.book_list.components.BookList
 import com.plcoding.bookpedia.book.presentation.book_list.components.BookSearchBar
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
+import com.plcoding.bookpedia.core.presentation.RealTimeClock
 import com.plcoding.bookpedia.core.presentation.SandYellow
+import dev.icerock.moko.permissions.PermissionState
+import dev.icerock.moko.permissions.compose.BindEffect
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -52,6 +59,29 @@ fun BookListScreenRoot(
     onBookClick: (Book) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    // TODO use koin
+    val permissionsFactory = rememberPermissionsControllerFactory()
+    val permissionsController = remember(permissionsFactory) {
+        permissionsFactory.createPermissionsController()
+    }
+    BindEffect(permissionsController)
+    val permissionsViewModel: PermissionsViewModel = viewModel {
+        PermissionsViewModel(permissionsController)
+    }
+    val permissionsState = permissionsViewModel.permissionsState
+
+    LaunchedEffect(permissionsState) {
+        when (permissionsState) {
+            PermissionState.DeniedAlways -> {
+
+            }
+
+            else -> {
+
+            }
+        }
+    }
+    permissionsViewModel.provideOrRequestLocationPermission()
 
     BookListScreen(
         state = state,
@@ -91,9 +121,11 @@ fun BookListScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(DarkBlue)
-            .statusBarsPadding(),
+            .statusBarsPadding()
+            .padding(top = 5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        RealTimeClock()
         BookSearchBar(
             searchQuery = state.searchQuery,
             onSearchQueryChange = {

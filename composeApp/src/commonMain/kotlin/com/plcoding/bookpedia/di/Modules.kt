@@ -1,6 +1,7 @@
 package com.plcoding.bookpedia.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.plcoding.bookpedia.app.PermissionsViewModel
 import com.plcoding.bookpedia.book.data.database.DatabaseFactory
 import com.plcoding.bookpedia.book.data.database.FavoriteBookDatabase
 import com.plcoding.bookpedia.book.data.network.KtorRemoteBookDataSource
@@ -45,4 +46,5 @@ val sharedModule = module {
     viewModelOf(::BookListViewModel)
     viewModelOf(::BookDetailViewModel)
     viewModelOf(::SelectedBookViewModel)
+    viewModelOf(::PermissionsViewModel)
 }
