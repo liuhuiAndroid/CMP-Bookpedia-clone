@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -26,7 +28,9 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    prefs: DataStore<Preferences>
+) {
     KLogger.setTag("Bookpedia")
     MaterialTheme {
         val navController = rememberNavController()
@@ -50,6 +54,7 @@ fun App() {
                     }
 
                     BookListScreenRoot(
+                        prefs = prefs,
                         viewModel = viewModel,
                         onBookClick = { book ->
                             selectedBookViewModel.onSelectBook(book)

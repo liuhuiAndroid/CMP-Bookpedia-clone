@@ -19,6 +19,9 @@ fun DataError.toUiText(): UiText {
         DataError.Remote.SERVER -> Res.string.error_unknown
         DataError.Remote.SERIALIZATION -> Res.string.error_serialization
         DataError.Remote.UNKNOWN -> Res.string.error_unknown
+        DataError.Remote.UNAUTHORIZED -> Res.string.error_unknown
+        DataError.Remote.CONFLICT -> Res.string.error_unknown
+        DataError.Remote.PAYLOAD_TOO_LARGE -> Res.string.error_unknown
     }
 
     return UiText.StringResourceId(stringRes)

@@ -9,7 +9,10 @@ sealed interface DataError : Error {
         NO_INTERNET,        // 没有网络连接
         SERVER,             // 服务器错误
         SERIALIZATION,      // 序列化错误
-        UNKNOWN             // 未知的远程错误
+        UNKNOWN,             // 未知的远程错误
+        UNAUTHORIZED,
+        CONFLICT,
+        PAYLOAD_TOO_LARGE
     }
 
     // 本地错误

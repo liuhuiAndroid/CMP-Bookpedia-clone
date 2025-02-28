@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,14 +25,21 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmp_bookpedia_clone.composeapp.generated.resources.Res
@@ -50,11 +58,14 @@ import com.plcoding.bookpedia.core.presentation.SandYellow
 import dev.icerock.moko.permissions.PermissionState
 import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun BookListScreenRoot(
+    prefs: DataStore<Preferences>,
     viewModel: BookListViewModel = koinViewModel(),
     onBookClick: (Book) -> Unit,
 ) {
@@ -84,6 +95,7 @@ fun BookListScreenRoot(
     permissionsViewModel.provideOrRequestLocationPermission()
 
     BookListScreen(
+        prefs = prefs,
         state = state,
         onAction = { action ->
             when (action) {
@@ -97,6 +109,7 @@ fun BookListScreenRoot(
 
 @Composable
 fun BookListScreen(
+    prefs: DataStore<Preferences>,
     state: BookListState,
     onAction: (BookListAction) -> Unit,
 ) {
@@ -117,6 +130,14 @@ fun BookListScreen(
         onAction(BookListAction.OnTabSelected(pagerState.currentPage))
     }
 
+    val counter by prefs
+        .data
+        .map {
+            val counterKey = intPreferencesKey("counter")
+            it[counterKey] ?: 0
+        }
+        .collectAsState(0)
+    val scope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -125,6 +146,22 @@ fun BookListScreen(
             .padding(top = 5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = counter.toString(),
+            textAlign = TextAlign.Center,
+            fontSize = 50.sp,
+            color = Color.White
+        )
+        Button(onClick = {
+            scope.launch {
+                prefs.edit { dataStore ->
+                    val counterKey = intPreferencesKey("counter")
+                    dataStore[counterKey] = counter + 1
+                }
+            }
+        }) {
+            Text("Increment!")
+        }
         RealTimeClock()
         BookSearchBar(
             searchQuery = state.searchQuery,
